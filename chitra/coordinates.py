@@ -28,6 +28,7 @@ class BoundingBoxes:
             self.CORNER,
         ):
             raise ValueError("bbox format must be either xyxy or xyhw")
+        bboxes = self._listify(bboxes, 4)
         labels = self._listify(labels)
 
         if len(bboxes) != len(labels):
@@ -43,7 +44,7 @@ class BoundingBoxes:
         if not isinstance(item, (list, tuple)):
             return [item]
 
-        if isinstance(item, (list, tuple)) and self.num_dim(item) == dim_trigger:
+        if isinstance(item, (list, tuple)) and self.num_dim(item) == dim_trigger and not isinstance(item[0], list):
             item = [item]
         return item
 
